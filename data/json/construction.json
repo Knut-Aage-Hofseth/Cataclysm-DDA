@@ -7844,14 +7844,12 @@
   },
   {
     "type": "construction",
-    "id": "constr_obstacle_rock",
-    "group": "obstacle_rock",
-    "category": "CONSTRUCT",
+    "id": "constr_clear_rubble",
+    "group": "clear_rubble_construction",
+    "category": "OTHER",
     "required_skills": [ [ "survival", 1 ] ],
-    "qualities": [ [ { "id": "DIG", "level": 1 } ] ],
+    "qualities": [ [ { "id": "DIG", "level": 2 } ] ],
     "time": "5 m",
-    "components": [ [ [ "rock_large", 22 ] ] ],
-    "pre_terrain": "t_dirt",
-    "post_terrain": "t_rockyobstacle"
+    "pre_terrain": "f_rubble"
   }
 ]

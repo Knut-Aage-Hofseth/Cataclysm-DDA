@@ -1731,7 +1731,7 @@
   },
   {
     "type": "construction_group",
-    "id": "obstacle_rock",
-    "name": "Build a Rocky Obstacle"
+    "id": "clear_rubble_construction",
+    "name": "Clear Rubble"
   }
 ]

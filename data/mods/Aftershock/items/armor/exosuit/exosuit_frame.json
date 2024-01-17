@@ -46,7 +46,6 @@
         "inherits_flags": true,
         "max_contains_volume": "25 L",
         "max_contains_weight": "140 kg",
-        "max_item_length": "60 cm",
         "flag_restriction": [ "EXO_HELMET_GADGET" ],
         "moves": 60
       },
@@ -59,7 +58,6 @@
         "inherits_flags": true,
         "max_contains_volume": "25 L",
         "max_contains_weight": "140 kg",
-        "max_item_length": "60 cm",
         "flag_restriction": [ "EXO_HELMET_GADGET" ],
         "moves": 60
       },
@@ -72,7 +70,6 @@
         "inherits_flags": true,
         "max_contains_volume": "25 L",
         "max_contains_weight": "140 kg",
-        "max_item_length": "60 cm",
         "flag_restriction": [ "EXO_HELMET_GADGET" ],
         "moves": 60
       },
@@ -85,7 +82,6 @@
         "inherits_flags": true,
         "max_contains_volume": "25 L",
         "max_contains_weight": "140 kg",
-        "max_item_length": "60 cm",
         "flag_restriction": [ "EXO_HELMET_GADGET" ],
         "moves": 60
       },
@@ -110,7 +106,6 @@
         "inherits_flags": true,
         "max_contains_volume": "25 L",
         "max_contains_weight": "140 kg",
-        "max_item_length": "70 cm",
         "flag_restriction": [ "EXO_LARGE_GADGET", "EXO_MEDIUM_GADGET", "EXO_SMALL_GADGET" ],
         "moves": 60
       },
@@ -123,7 +118,6 @@
         "inherits_flags": true,
         "max_contains_volume": "25 L",
         "max_contains_weight": "140 kg",
-        "max_item_length": "70 cm",
         "flag_restriction": [ "EXO_LARGE_GADGET", "EXO_MEDIUM_GADGET", "EXO_SMALL_GADGET" ],
         "moves": 60
       },
@@ -136,7 +130,6 @@
         "inherits_flags": true,
         "max_contains_volume": "25 L",
         "max_contains_weight": "140 kg",
-        "max_item_length": "20 cm",
         "flag_restriction": [ "EXO_SMALL_GADGET" ],
         "moves": 60
       },
@@ -149,7 +142,6 @@
         "inherits_flags": true,
         "max_contains_volume": "25 L",
         "max_contains_weight": "140 kg",
-        "max_item_length": "20 cm",
         "flag_restriction": [ "EXO_SMALL_GADGET" ],
         "moves": 60
       },
@@ -174,7 +166,6 @@
         "rigid": true,
         "max_contains_volume": "25 L",
         "max_contains_weight": "140 kg",
-        "max_item_length": "120 cm",
         "flag_restriction": [ "EXO_ARM_PLATE" ],
         "moves": 120
       },
@@ -187,7 +178,6 @@
         "inherits_flags": true,
         "max_contains_volume": "25 L",
         "max_contains_weight": "140 kg",
-        "max_item_length": "120 cm",
         "flag_restriction": [ "EXO_MEDIUM_GADGET", "EXO_SMALL_GADGET" ],
         "moves": 60
       },
@@ -200,7 +190,6 @@
         "inherits_flags": true,
         "max_contains_volume": "25 L",
         "max_contains_weight": "140 kg",
-        "max_item_length": "90 cm",
         "flag_restriction": [ "EXO_MEDIUM_GADGET", "EXO_SMALL_GADGET" ],
         "moves": 60
       },
@@ -213,7 +202,6 @@
         "inherits_flags": true,
         "max_contains_volume": "25 L",
         "max_contains_weight": "140 kg",
-        "max_item_length": "60 cm",
         "flag_restriction": [ "EXO_SMALL_GADGET" ],
         "moves": 60
       },
@@ -226,7 +214,6 @@
         "inherits_flags": true,
         "max_contains_volume": "25 L",
         "max_contains_weight": "140 kg",
-        "max_item_length": "60 cm",
         "flag_restriction": [ "EXO_SMALL_GADGET" ],
         "moves": 60
       },
@@ -251,7 +238,6 @@
         "inherits_flags": true,
         "max_contains_volume": "25 L",
         "max_contains_weight": "140 kg",
-        "max_item_length": "80 cm",
         "flag_restriction": [ "EXO_MEDIUM_GADGET", "EXO_SMALL_GADGET" ],
         "moves": 60
       },
@@ -264,7 +250,6 @@
         "inherits_flags": true,
         "max_contains_volume": "25 L",
         "max_contains_weight": "140 kg",
-        "max_item_length": "50 cm",
         "flag_restriction": [ "EXO_MEDIUM_GADGET", "EXO_SMALL_GADGET" ],
         "moves": 60
       },
@@ -277,7 +262,6 @@
         "inherits_flags": true,
         "max_contains_volume": "25 L",
         "max_contains_weight": "140 kg",
-        "max_item_length": "20 cm",
         "flag_restriction": [ "EXO_SMALL_GADGET" ],
         "moves": 60
       },
@@ -290,7 +274,6 @@
         "inherits_flags": true,
         "max_contains_volume": "25 L",
         "max_contains_weight": "140 kg",
-        "max_item_length": "20 cm",
         "flag_restriction": [ "EXO_SMALL_GADGET" ],
         "moves": 60
       }

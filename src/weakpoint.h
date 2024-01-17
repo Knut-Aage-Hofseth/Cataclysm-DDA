@@ -4,7 +4,6 @@
 
 #include <array>
 #include <map>
-#include <unordered_map>
 #include <optional>
 #include <string>
 #include <utility>
@@ -125,13 +124,13 @@ struct weakpoint {
     // Percent chance of hitting the weakpoint. Can be increased by skill.
     float coverage = 100.0f;
     // Multiplier for existing armor values. Defaults to 1.
-    std::unordered_map<damage_type_id, float> armor_mult;
+    std::map<damage_type_id, float> armor_mult;
     // Flat penalty to armor values. Applied after the multiplier.
-    std::unordered_map<damage_type_id, float> armor_penalty;
+    std::map<damage_type_id, float> armor_penalty;
     // Damage multipliers. Applied after armor.
-    std::unordered_map<damage_type_id, float> damage_mult;
+    std::map<damage_type_id, float> damage_mult;
     // Critical damage multipliers. Applied after armor instead of damage_mult, if the attack is a crit.
-    std::unordered_map<damage_type_id, float> crit_mult;
+    std::map<damage_type_id, float> crit_mult;
     // A list of required effects.
     std::vector<efftype_id> required_effects;
     // A list of effects that may trigger by hitting this weak point.

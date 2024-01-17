@@ -49,6 +49,8 @@ struct lat_long {
     units::angle longitude;
 };
 
+constexpr lat_long location_boston{ 42.36_degrees, -71.06_degrees };
+
 /**
  * Create a units label for a weight value.
  *

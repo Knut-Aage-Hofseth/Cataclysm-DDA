@@ -7,5 +7,14 @@
       "║",
       "\""
     ]
+  },
+  {
+    "type": "ascii_art",
+    "id": "8mm_inc",
+    "picture": [
+      "<color_red>_",
+      "<color_light_red>║",
+      "\""
+    ]
   }
 ]

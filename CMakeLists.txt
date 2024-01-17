@@ -222,10 +222,7 @@ if (NOT MSVC)
              -Wpedantic \
              -Wsuggest-override \
              -Wunused-macros \
-             -Wzero-as-null-pointer-constant \
-             -Wno-unknown-warning-option \
-             -Wno-dangling-reference \
-             -Wno-c++20-compat")
+             -Wzero-as-null-pointer-constant")
     if("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
         set(CATA_WARNINGS "${CATA_WARNINGS} -Wno-unknown-warning-option")
     else()

@@ -61,7 +61,7 @@
     "color": "light_cyan",
     "symbol": "]",
     "material": [ "superalloy" ],
-    "volume": "6 L",
+    "volume": "3 L",
     "category": "veh_parts",
     "price": 18500,
     "price_postapoc": 500,

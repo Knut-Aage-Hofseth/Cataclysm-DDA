@@ -135,7 +135,6 @@ enum class iteminfo_parts : size_t {
     GUNMOD_USEDON,
     GUNMOD_LOCATION,
     GUNMOD_BLACKLIST_MOD,
-    GUNMOD_BLACKLIST_SLOT,
 
     ARMOR_BODYGRAPH,
     ARMOR_BODYPARTS,

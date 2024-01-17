@@ -12,8 +12,14 @@
     "shape": "blast",
     "max_level": { "math": [ "int_to_level(1)" ] },
     "min_damage": 0,
-    "min_duration": { "math": [ "( (u_spell_level('clair_night_vision') * 20000) + 15000) * (scaling_factor(u_val('intelligence') ) )" ] },
-    "max_duration": { "math": [ "( (u_spell_level('clair_night_vision') * 20000) + 180000) * (scaling_factor(u_val('intelligence') ) )" ] }
+    "min_duration": {
+      "math": [ "( (u_val('spell_level', 'spell: clair_night_vision') * 20000) + 15000) * (scaling_factor(u_val('intelligence') ) )" ]
+    },
+    "max_duration": {
+      "math": [
+        "( (u_val('spell_level', 'spell: clair_night_vision') * 20000) + 180000) * (scaling_factor(u_val('intelligence') ) )"
+      ]
+    }
   },
   {
     "id": "clair_night_vision_2",
@@ -28,8 +34,14 @@
     "shape": "blast",
     "max_level": { "math": [ "int_to_level(1)" ] },
     "min_damage": 0,
-    "min_duration": { "math": [ "( (u_spell_level('clair_night_vision') * 20000) + 15000) * (scaling_factor(u_val('intelligence') ) )" ] },
-    "max_duration": { "math": [ "( (u_spell_level('clair_night_vision') * 20000) + 180000) * (scaling_factor(u_val('intelligence') ) )" ] }
+    "min_duration": {
+      "math": [ "( (u_val('spell_level', 'spell: clair_night_vision') * 20000) + 15000) * (scaling_factor(u_val('intelligence') ) )" ]
+    },
+    "max_duration": {
+      "math": [
+        "( (u_val('spell_level', 'spell: clair_night_vision') * 20000) + 180000) * (scaling_factor(u_val('intelligence') ) )"
+      ]
+    }
   },
   {
     "id": "clair_night_vision_3",
@@ -44,8 +56,14 @@
     "shape": "blast",
     "max_level": { "math": [ "int_to_level(1)" ] },
     "min_damage": 0,
-    "min_duration": { "math": [ "( (u_spell_level('clair_night_vision') * 20000) + 15000) * (scaling_factor(u_val('intelligence') ) )" ] },
-    "max_duration": { "math": [ "( (u_spell_level('clair_night_vision') * 20000) + 180000) * (scaling_factor(u_val('intelligence') ) )" ] }
+    "min_duration": {
+      "math": [ "( (u_val('spell_level', 'spell: clair_night_vision') * 20000) + 15000) * (scaling_factor(u_val('intelligence') ) )" ]
+    },
+    "max_duration": {
+      "math": [
+        "( (u_val('spell_level', 'spell: clair_night_vision') * 20000) + 180000) * (scaling_factor(u_val('intelligence') ) )"
+      ]
+    }
   },
   {
     "id": "clair_night_vision_4",
@@ -60,8 +78,14 @@
     "shape": "blast",
     "max_level": { "math": [ "int_to_level(1)" ] },
     "min_damage": 0,
-    "min_duration": { "math": [ "( (u_spell_level('clair_night_vision') * 20000) + 15000) * (scaling_factor(u_val('intelligence') ) )" ] },
-    "max_duration": { "math": [ "( (u_spell_level('clair_night_vision') * 20000) + 180000) * (scaling_factor(u_val('intelligence') ) )" ] }
+    "min_duration": {
+      "math": [ "( (u_val('spell_level', 'spell: clair_night_vision') * 20000) + 15000) * (scaling_factor(u_val('intelligence') ) )" ]
+    },
+    "max_duration": {
+      "math": [
+        "( (u_val('spell_level', 'spell: clair_night_vision') * 20000) + 180000) * (scaling_factor(u_val('intelligence') ) )"
+      ]
+    }
   },
   {
     "id": "clair_night_vision_5",
@@ -76,8 +100,14 @@
     "shape": "blast",
     "max_level": { "math": [ "int_to_level(1)" ] },
     "min_damage": 0,
-    "min_duration": { "math": [ "( (u_spell_level('clair_night_vision') * 20000) + 15000) * (scaling_factor(u_val('intelligence') ) )" ] },
-    "max_duration": { "math": [ "( (u_spell_level('clair_night_vision') * 20000) + 180000) * (scaling_factor(u_val('intelligence') ) )" ] }
+    "min_duration": {
+      "math": [ "( (u_val('spell_level', 'spell: clair_night_vision') * 20000) + 15000) * (scaling_factor(u_val('intelligence') ) )" ]
+    },
+    "max_duration": {
+      "math": [
+        "( (u_val('spell_level', 'spell: clair_night_vision') * 20000) + 180000) * (scaling_factor(u_val('intelligence') ) )"
+      ]
+    }
   },
   {
     "id": "clair_night_vision_6",
@@ -92,8 +122,14 @@
     "shape": "blast",
     "max_level": { "math": [ "int_to_level(1)" ] },
     "min_damage": 0,
-    "min_duration": { "math": [ "( (u_spell_level('clair_night_vision') * 20000) + 15000) * (scaling_factor(u_val('intelligence') ) )" ] },
-    "max_duration": { "math": [ "( (u_spell_level('clair_night_vision') * 20000) + 180000) * (scaling_factor(u_val('intelligence') ) )" ] }
+    "min_duration": {
+      "math": [ "( (u_val('spell_level', 'spell: clair_night_vision') * 20000) + 15000) * (scaling_factor(u_val('intelligence') ) )" ]
+    },
+    "max_duration": {
+      "math": [
+        "( (u_val('spell_level', 'spell: clair_night_vision') * 20000) + 180000) * (scaling_factor(u_val('intelligence') ) )"
+      ]
+    }
   },
   {
     "id": "clair_night_vision_7",
@@ -108,8 +144,14 @@
     "shape": "blast",
     "max_level": { "math": [ "int_to_level(1)" ] },
     "min_damage": 0,
-    "min_duration": { "math": [ "( (u_spell_level('clair_night_vision') * 20000) + 15000) * (scaling_factor(u_val('intelligence') ) )" ] },
-    "max_duration": { "math": [ "( (u_spell_level('clair_night_vision') * 20000) + 180000) * (scaling_factor(u_val('intelligence') ) )" ] }
+    "min_duration": {
+      "math": [ "( (u_val('spell_level', 'spell: clair_night_vision') * 20000) + 15000) * (scaling_factor(u_val('intelligence') ) )" ]
+    },
+    "max_duration": {
+      "math": [
+        "( (u_val('spell_level', 'spell: clair_night_vision') * 20000) + 180000) * (scaling_factor(u_val('intelligence') ) )"
+      ]
+    }
   },
   {
     "id": "clair_night_vision_8",
@@ -124,8 +166,14 @@
     "shape": "blast",
     "max_level": { "math": [ "int_to_level(1)" ] },
     "min_damage": 0,
-    "min_duration": { "math": [ "( (u_spell_level('clair_night_vision') * 20000) + 15000) * (scaling_factor(u_val('intelligence') ) )" ] },
-    "max_duration": { "math": [ "( (u_spell_level('clair_night_vision') * 20000) + 180000) * (scaling_factor(u_val('intelligence') ) )" ] }
+    "min_duration": {
+      "math": [ "( (u_val('spell_level', 'spell: clair_night_vision') * 20000) + 15000) * (scaling_factor(u_val('intelligence') ) )" ]
+    },
+    "max_duration": {
+      "math": [
+        "( (u_val('spell_level', 'spell: clair_night_vision') * 20000) + 180000) * (scaling_factor(u_val('intelligence') ) )"
+      ]
+    }
   },
   {
     "type": "effect_on_condition",

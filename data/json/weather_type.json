@@ -342,7 +342,13 @@
     "condition": {
       "and": [
         { "math": [ "cause_early_portal_storm", "==", "1" ] },
-        { "math": [ "distance('_weather_location', 'portal_storm_center')", "<=", "portal_storm_distant_distance" ] }
+        {
+          "compare_num": [
+            { "distance": [ { "context_val": "weather_location" }, { "global_val": "portal_storm_center" } ] },
+            "<=",
+            { "global_val": "var", "var_name": "portal_storm_distant_distance", "default": 200 }
+          ]
+        }
       ]
     }
   },
@@ -370,7 +376,13 @@
     "condition": {
       "and": [
         { "math": [ "cause_portal_storm", "==", "1" ] },
-        { "math": [ "distance('_weather_location', 'portal_storm_center')", "<=", "portal_storm_distant_distance" ] }
+        {
+          "compare_num": [
+            { "distance": [ { "context_val": "weather_location" }, { "global_val": "portal_storm_center" } ] },
+            "<=",
+            { "global_val": "var", "var_name": "portal_storm_distant_distance", "default": 200 }
+          ]
+        }
       ]
     }
   },
@@ -398,7 +410,13 @@
     "condition": {
       "and": [
         { "math": [ "cause_portal_storm", "==", "1" ] },
-        { "math": [ "distance('_weather_location', 'portal_storm_center')", "<=", "portal_storm_close_distance" ] }
+        {
+          "compare_num": [
+            { "distance": [ { "context_val": "weather_location" }, { "global_val": "portal_storm_center" } ] },
+            "<=",
+            { "global_val": "var", "var_name": "portal_storm_close_distance", "default": 100 }
+          ]
+        }
       ]
     }
   },
@@ -426,7 +444,13 @@
     "condition": {
       "and": [
         { "math": [ "cause_portal_storm", "==", "1" ] },
-        { "math": [ "distance('_weather_location', 'portal_storm_center')", "<=", "portal_storm_distance" ] }
+        {
+          "compare_num": [
+            { "distance": [ { "context_val": "weather_location" }, { "global_val": "portal_storm_center" } ] },
+            "<=",
+            { "global_val": "var", "var_name": "portal_storm_distance", "default": 50 }
+          ]
+        }
       ]
     }
   }

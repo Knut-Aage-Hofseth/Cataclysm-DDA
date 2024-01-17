@@ -78,8 +78,7 @@
       { "distribution": [ { "group": "infantry_officer_gear" }, { "group": "infantry_medical_gear" } ], "prob": 25 },
       { "group": "wallets", "prob": 10 },
       { "group": "pocket_cigar", "prob": 15 },
-      { "group": "misc_smoking_legal", "prob": 30 },
-      { "item": "dog_tag", "prob": 40 }
+      { "group": "misc_smoking_legal", "prob": 30 }
     ]
   },
   {
@@ -156,8 +155,7 @@
       { "distribution": [ { "group": "infantry_officer_gear" }, { "group": "infantry_medical_gear" } ], "prob": 25 },
       { "group": "wallets", "prob": 10 },
       { "group": "pocket_cigar", "prob": 15 },
-      { "group": "misc_smoking_legal", "prob": 30 },
-      { "item": "dog_tag", "prob": 40 }
+      { "group": "misc_smoking_legal", "prob": 30 }
     ]
   },
   {
@@ -230,8 +228,7 @@
       },
       { "group": "wallets", "prob": 10 },
       { "group": "pocket_cigar", "prob": 15 },
-      { "group": "misc_smoking_legal", "prob": 30 },
-      { "item": "dog_tag", "prob": 40 }
+      { "group": "misc_smoking_legal", "prob": 30 }
     ]
   }
 ]

@@ -492,7 +492,7 @@ void Pickup::pick_info::serialize( JsonOut &jsout ) const
 
 void Pickup::pick_info::deserialize( const JsonObject &jsobj )
 {
-    int src_type_ = 0;
+    int src_type_;
     jsobj.read( "total_bulk_volume", total_bulk_volume );
     jsobj.read( "src_type", src_type_ );
     src_type = static_cast<item_location::type>( src_type_ );

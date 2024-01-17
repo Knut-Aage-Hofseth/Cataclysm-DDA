@@ -84,6 +84,7 @@
 #include "visitable.h"
 #include "vpart_position.h"
 #include "vpart_range.h"
+#include "name.h"
 
 static const efftype_id effect_bouldering( "bouldering" );
 static const efftype_id effect_controlled( "controlled" );
@@ -93,9 +94,7 @@ static const efftype_id effect_infection( "infection" );
 static const efftype_id effect_mending( "mending" );
 static const efftype_id effect_npc_flee_player( "npc_flee_player" );
 static const efftype_id effect_npc_suspend( "npc_suspend" );
-static const efftype_id effect_pkill1_acetaminophen( "pkill1_acetaminophen" );
-static const efftype_id effect_pkill1_generic( "pkill1_generic" );
-static const efftype_id effect_pkill1_nsaid( "pkill1_nsaid" );
+static const efftype_id effect_pkill1( "pkill1" );
 static const efftype_id effect_pkill2( "pkill2" );
 static const efftype_id effect_pkill3( "pkill3" );
 static const efftype_id effect_pkill_l( "pkill_l" );
@@ -118,6 +117,8 @@ static const item_group_id Item_spawn_data_survivor_stabbing( "survivor_stabbing
 static const mfaction_str_id monfaction_bee( "bee" );
 static const mfaction_str_id monfaction_human( "human" );
 static const mfaction_str_id monfaction_player( "player" );
+
+static const mon_flag_str_id mon_flag_RIDEABLE_MECH( "RIDEABLE_MECH" );
 
 static const overmap_location_str_id overmap_location_source_of_ammo( "source_of_ammo" );
 static const overmap_location_str_id overmap_location_source_of_anything( "source_of_anything" );
@@ -647,7 +648,7 @@ void npc::load_npc_template( const string_id<npc_template> &ident )
     if( tem.gender_override != npc_template::gender::random ) {
         male = tem.gender_override == npc_template::gender::male;
     }
-    name = SNIPPET.expand( male ? "<male_full_name>" : "<female_full_name>" );
+    name = Name::generate( male );
     if( !tem.name_unique.empty() ) {
         name = tem.name_unique.translated();
     }
@@ -819,24 +820,59 @@ void npc::randomize( const npc_class_id &type, const npc_template_id &tem_id )
     int_max += the_class.roll_intelligence();
     per_max += the_class.roll_perception();
 
-    personality.aggression += the_class.roll_aggression();
-    personality.bravery += the_class.roll_bravery();
-    personality.collector += the_class.roll_collector();
-    personality.altruism += the_class.roll_altruism();
-
-    personality.aggression = std::clamp( personality.aggression, NPC_PERSONALITY_MIN,
-                                         NPC_PERSONALITY_MAX );
-    personality.bravery = std::clamp( personality.bravery, NPC_PERSONALITY_MIN, NPC_PERSONALITY_MAX );
-    personality.collector = std::clamp( personality.collector, NPC_PERSONALITY_MIN,
-                                        NPC_PERSONALITY_MAX );
-    personality.altruism = std::clamp( personality.altruism, NPC_PERSONALITY_MIN, NPC_PERSONALITY_MAX );
-
     for( Skill &skill : Skill::skills ) {
         int level = myclass->roll_skill( skill.ident() );
 
         set_skill_level( skill.ident(), level );
     }
 
+    if( type.is_null() ) { // Untyped; no particular specialization
+    } else if( type == NC_EVAC_SHOPKEEP || type == NC_BARTENDER || type == NC_JUNK_SHOPKEEP ) {
+        personality.collector += rng( 1, 5 );
+
+    } else if( type == NC_ARSONIST ) {
+        personality.aggression += rng( 0, 1 );
+        personality.collector += rng( 0, 2 );
+
+    } else if( type == NC_SOLDIER ) {
+        personality.aggression += rng( 1, 3 );
+        personality.bravery += rng( 0, 5 );
+
+    } else if( type == NC_HACKER ) {
+        personality.bravery -= rng( 1, 3 );
+        personality.aggression -= rng( 0, 2 );
+
+    } else if( type == NC_DOCTOR ) {
+        personality.aggression -= rng( 0, 4 );
+        cash += 10000 * rng( 0, 3 ) * rng( 0, 3 );
+
+    } else if( type == NC_TRADER ) {
+        personality.collector += rng( 1, 5 );
+        cash += 25000 * rng( 1, 10 );
+
+    } else if( type == NC_NINJA ) {
+        personality.bravery += rng( 0, 3 );
+        personality.collector -= rng( 1, 6 );
+        // TODO: give ninja his styles back
+
+    } else if( type == NC_COWBOY ) {
+        personality.aggression += rng( 0, 2 );
+        personality.bravery += rng( 1, 5 );
+
+    } else if( type == NC_SCIENTIST ) {
+        personality.aggression -= rng( 1, 5 );
+        personality.bravery -= rng( 2, 8 );
+        personality.collector += rng( 0, 2 );
+
+    } else if( type == NC_BOUNTY_HUNTER || type == NC_THUG ) {
+        personality.aggression += rng( 1, 6 );
+        personality.bravery += rng( 0, 5 );
+
+    } else if( type == NC_SCAVENGER ) {
+        personality.aggression += rng( 1, 3 );
+        personality.bravery += rng( 1, 4 );
+
+    }
     //A universal barter boost to keep NPCs competitive with players
     //The int boost from trade wasn't active... now that it is, most
     //players will vastly outclass npcs in trade without a little help.
@@ -861,9 +897,6 @@ void npc::randomize( const npc_class_id &type, const npc_template_id &tem_id )
         const std::string &var = cur.variant;
         set_mutation( tid, tid->variant( var ) );
     }
-
-    // Add personality traits
-    generate_personality_traits();
 
     // Run mutation rounds
     for( const auto &mr : type->mutation_rounds ) {
@@ -896,32 +929,6 @@ void npc::randomize( const npc_class_id &type, const npc_template_id &tem_id )
 
     // Add eocs
     effect_on_conditions::load_new_character( *this );
-}
-
-void npc::clear_personality_traits()
-{
-    for( const trait_id &trait : get_mutations() ) {
-        if( trait.obj().personality_score ) {
-            unset_mutation( trait );
-        }
-    }
-}
-
-void npc::generate_personality_traits()
-{
-    npc_personality &ur = personality;
-    for( const mutation_branch &mdata : mutation_branch::get_all() ) {
-        if( mdata.personality_score ) {
-            const auto &required = mdata.personality_score;
-            // This looks intimidating, but it's really just a bounds check, repeated for every personality score.
-            if( ( required->min_aggression <= ur.aggression && ur.aggression <= required->max_aggression ) &&
-                ( required->min_bravery <= ur.bravery && ur.bravery <= required->max_bravery ) &&
-                ( required->min_collector <= ur.collector && ur.collector <= required->max_collector ) &&
-                ( required->min_altruism <= ur.altruism && ur.altruism <= required->max_altruism ) ) {
-                set_mutation( mdata.id );
-            }
-        }
-    }
 }
 
 void npc::learn_ma_styles_from_traits()
@@ -1497,13 +1504,6 @@ bool npc::wear_if_wanted( const item &it, std::string &reason )
 
 void npc::stow_item( item &it )
 {
-    bool stow_bionic_weapon = is_using_bionic_weapon()
-                              && get_wielded_item().get_item() == &it;
-    if( stow_bionic_weapon ) {
-        deactivate_or_discharge_bionic_weapon( true );
-        return;
-    }
-
     bool avatar_sees = get_player_view().sees( pos() );
     if( wear_item( it, false ) ) {
         // Wearing the item was successful, remove weapon and post message.
@@ -2392,8 +2392,7 @@ bool npc::has_painkiller()
 
 bool npc::took_painkiller() const
 {
-    return has_effect( effect_pkill1_generic )  || has_effect( effect_pkill1_acetaminophen ) ||
-           has_effect( effect_pkill1_nsaid ) || has_effect( effect_pkill2 ) ||
+    return has_effect( effect_pkill1 ) || has_effect( effect_pkill2 ) ||
            has_effect( effect_pkill3 ) || has_effect( effect_pkill_l );
 }
 
@@ -2601,11 +2600,7 @@ Creature::Attitude npc::attitude_to( const Creature &other ) const
         case MATT_FPASSIVE:
         case MATT_IGNORE:
         case MATT_FLEE:
-            if( m.has_flag( mon_flag_HIT_AND_RUN ) ) {
-                return Attitude::HOSTILE;
-            } else {
-                return Attitude::NEUTRAL;
-            }
+            return Attitude::NEUTRAL;
         case MATT_FRIEND:
             return Attitude::FRIENDLY;
         case MATT_ATTACK:
@@ -2651,12 +2646,15 @@ void npc::npc_dismount()
 
 int npc::smash_ability() const
 {
-    if( is_hallucination() || ( is_player_ally() && !rules.has_flag( ally_rule::allow_bash ) ) ) {
-        // Not allowed to bash
-        return 0;
+    if( !is_hallucination() && ( !is_player_ally() || rules.has_flag( ally_rule::allow_bash ) ) ) {
+        ///\EFFECT_STR_NPC increases smash ability
+        int dmg = get_wielded_item() ? get_wielded_item()->damage_melee( STATIC(
+                      damage_type_id( "bash" ) ) ) : 0;
+        return str_cur + dmg;
     }
 
-    return Character::smash_ability();
+    // Not allowed to bash
+    return 0;
 }
 
 float npc::danger_assessment() const
@@ -3198,6 +3196,7 @@ void npc::add_new_mission( class mission *miss )
 
 void npc::on_unload()
 {
+    get_map().remove_creature_from_reachability( this );
 }
 
 // A throtled version of player::update_body since npc's don't need to-the-turn updates.
@@ -3451,9 +3450,9 @@ const pathfinding_settings &npc::get_pathfinding_settings( bool no_bashing ) con
     return *path_settings;
 }
 
-std::unordered_set<tripoint> npc::get_path_avoid() const
+std::set<tripoint> npc::get_path_avoid() const
 {
-    std::unordered_set<tripoint> ret;
+    std::set<tripoint> ret;
     for( Creature &critter : g->all_creatures() ) {
         // TODO: Cache this somewhere
         ret.insert( critter.pos() );
@@ -3481,9 +3480,8 @@ std::unordered_set<tripoint> npc::get_path_avoid() const
         }
     }
 
-    for( const tripoint &p : here.points_in_radius( pos(), 6 ) ) {
-        if( sees_dangerous_field( p ) || ( here.veh_at( p ).part_with_feature( VPFLAG_CARGO, true ) &&
-                                           !move_in_vehicle( const_cast<npc *>( this ), p ) ) ) {
+    for( const tripoint &p : here.points_in_radius( pos(), 5 ) ) {
+        if( sees_dangerous_field( p ) ) {
             ret.insert( p );
         }
     }
@@ -3755,8 +3753,8 @@ npc_follower_rules::npc_follower_rules()
     override_enable = ally_rule::DEFAULT;
 
     set_flag( ally_rule::use_guns );
-    clear_flag( ally_rule::use_grenades );
-    set_flag( ally_rule::use_silent );
+    set_flag( ally_rule::use_grenades );
+    clear_flag( ally_rule::use_silent );
     set_flag( ally_rule::avoid_friendly_fire );
 
     clear_flag( ally_rule::allow_pick_up );
@@ -3764,13 +3762,13 @@ npc_follower_rules::npc_follower_rules()
     clear_flag( ally_rule::allow_sleep );
     set_flag( ally_rule::allow_complain );
     set_flag( ally_rule::allow_pulp );
-    set_flag( ally_rule::close_doors );
-    set_flag( ally_rule::follow_close );
+    clear_flag( ally_rule::close_doors );
+    clear_flag( ally_rule::follow_close );
     clear_flag( ally_rule::avoid_doors );
     clear_flag( ally_rule::hold_the_line );
-    set_flag( ally_rule::ignore_noise );
+    clear_flag( ally_rule::ignore_noise );
     clear_flag( ally_rule::forbid_engage );
-    clear_flag( ally_rule::follow_distance_2 );
+    set_flag( ally_rule::follow_distance_2 );
 }
 
 bool npc_follower_rules::has_flag( ally_rule test, bool check_override ) const

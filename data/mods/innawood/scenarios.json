@@ -422,6 +422,7 @@
       "naked",
       "mutant_patient",
       "mutant_volunteer",
+      "mutant_amputee",
       "labtech",
       "security",
       "medic",

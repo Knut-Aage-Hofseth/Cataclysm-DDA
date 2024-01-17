@@ -39,9 +39,7 @@ constexpr bool operator>( binary_op const &lhs, binary_op const &rhs )
            ( lhs.precedence == rhs.precedence && lhs.assoc == binary_op::associativity::left );
 }
 enum class paren {
-    left_sq = 0,
-    right_sq,
-    left,
+    left = 0,
     right,
 };
 
@@ -110,7 +108,13 @@ struct var {
     template<class... Args>
     explicit var( Args &&... args ) : varinfo( std::forward<Args>( args )... ) {}
 
-    double eval( dialogue &d ) const;
+    double eval( dialogue &d ) const {
+        std::string const str = read_var_value( varinfo, d );
+        if( str.empty() ) {
+            return 0;
+        }
+        return std::stod( str );
+    }
 
     var_info varinfo;
 };
@@ -119,10 +123,6 @@ struct kwarg {
     explicit kwarg( std::string_view key_, thingie val_ );
     std::string key;
     std::shared_ptr<thingie> val;
-};
-struct array {
-    explicit array( std::vector<thingie> &&params_ ): params( params_ ) {}
-    std::vector<thingie> params;
 };
 struct ternary {
     ternary() = default;
@@ -144,7 +144,7 @@ struct thingie {
     constexpr double eval( dialogue &d ) const;
 
     using impl_t =
-        std::variant<double, std::string, oper, func, func_jmath, func_diag_eval, func_diag_ass, var, kwarg, ternary, array>;
+        std::variant<double, std::string, oper, func, func_jmath, func_diag_eval, func_diag_ass, var, kwarg, ternary>;
     impl_t data;
 };
 
@@ -156,19 +156,14 @@ constexpr double thingie::eval( dialogue &d ) const
             return v;
         },
         // NOLINTNEXTLINE(cata-use-string_view)
-        []( std::string const & v )
+        []( const std::string & v )
         {
-            debugmsg( "Unexpected string operand %s", v );
+            debugmsg( "Unexpected string operand %.*s", v.size(), v.data() );
             return 0.0;
         },
         []( kwarg const & v )
         {
             debugmsg( "Unexpected kwarg %s", v.key );
-            return 0.0;
-        },
-        []( array const & /* v */ )
-        {
-            debugmsg( "Unexpected array" );
             return 0.0;
         },
         [&d]( auto const & v ) -> double

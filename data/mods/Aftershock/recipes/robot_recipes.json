@@ -2,7 +2,6 @@
   {
     "type": "recipe",
     "result": "bot_laserturret_xray",
-    "activity_level": "BRISK_EXERCISE",
     "category": "CC_ELECTRONIC",
     "subcategory": "CSC_ELECTRONIC_OTHER",
     "skill_used": "electronics",
@@ -36,7 +35,6 @@
   {
     "abstract": "bot_utilibot_base",
     "type": "recipe",
-    "activity_level": "BRISK_EXERCISE",
     "category": "CC_ELECTRONIC",
     "subcategory": "CSC_ELECTRONIC_OTHER",
     "skill_used": "electronics",

@@ -153,9 +153,9 @@ struct trap {
          */
         units::mass trigger_weight = 500_gram;
         /**
-         * Determines how much sound is needed to trigger the trap. Defined as {min,max}.
+         * If a sound of at least this volume reaches the trap, it triggers.
          */
-        std::pair<int, int> sound_threshold = {0, 0};
+        int sound_threshold = 0;
         int funnel_radius_mm = 0;
         // For disassembly?
         std::vector<std::tuple<itype_id, int, int>> components;

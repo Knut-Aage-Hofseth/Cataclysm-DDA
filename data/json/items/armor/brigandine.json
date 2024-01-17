@@ -35,7 +35,6 @@
         "volume_encumber_modifier": 0,
         "max_contains_volume": "3 L",
         "max_contains_weight": "3000 g",
-        "max_item_length": "60 cm",
         "moves": 3000,
         "description": "Attachment for additional plating placed on top.",
         "flag_restriction": [ "EXTRA_PLATING" ]
@@ -102,7 +101,6 @@
         "volume_encumber_modifier": 0,
         "max_contains_volume": "3 L",
         "max_contains_weight": "3000 g",
-        "max_item_length": "60 cm",
         "moves": 3000,
         "description": "Attachment for additional plating placed on top.",
         "flag_restriction": [ "EXTRA_PLATING" ]
@@ -172,7 +170,6 @@
         "volume_encumber_modifier": 0,
         "max_contains_volume": "3 L",
         "max_contains_weight": "3000 g",
-        "max_item_length": "60 cm",
         "moves": 3000,
         "description": "Attachment for additional plating placed on top.",
         "flag_restriction": [ "EXTRA_PLATING" ]
@@ -253,7 +250,6 @@
         "volume_encumber_modifier": 0,
         "max_contains_volume": "3 L",
         "max_contains_weight": "3000 g",
-        "max_item_length": "60 cm",
         "moves": 3000,
         "description": "Attachment for additional plating placed on top.",
         "flag_restriction": [ "EXTRA_PLATING" ]

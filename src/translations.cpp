@@ -3,10 +3,19 @@
 #include "cata_utility.h"
 #include "debug.h"
 #include "get_version.h"
+#include "name.h"
 #include "path_info.h"
-#include "text_snippets.h"
 #include "translations.h"
 #include "translation_gendered.h"
+
+// Names depend on the language settings. They are loaded from different files
+// based on the currently used language. If that changes, we have to reload the
+// names.
+static void reload_names()
+{
+    Name::clear();
+    Name::load_from_file( PATH_INFO::names() );
+}
 
 // int version/generation that is incremented each time language is changed
 // used to invalidate translation cache
@@ -22,7 +31,7 @@ int detail::get_current_language_version()
 #include "system_locale.h"
 #include "ui.h"
 
-std::string select_language()
+void select_language()
 {
     auto languages = get_options().get_option( "USE_LANG" ).getItems();
 
@@ -39,7 +48,8 @@ std::string select_language()
     }
     sm.query();
 
-    return languages[sm.ret].first;
+    get_options().get_option( "USE_LANG" ).setValue( languages[sm.ret].first );
+    get_options().save();
 }
 #endif // LOCALIZE
 
@@ -99,10 +109,7 @@ void set_language( const std::string &lang )
     ( void ) lang;
 #endif // LOCALIZE
 
-    // Names depend on the language settings. They are loaded from different files
-    // based on the currently used language. If that changes, we have to reload the
-    // names.
-    SNIPPET.reload_names( PATH_INFO::names() );
+    reload_names();
 
     set_title( string_format( _( "Cataclysm: Dark Days Ahead - %s" ), getVersionString() ) );
 }

@@ -21,7 +21,7 @@
   {
     "id": "afs_calorie_water",
     "type": "COMESTIBLE",
-    "name": { "str_sp": "nutriment water" },
+    "name": "nutriment water",
     "copy-from": "water_clean",
     "comestible_type": "DRINK",
     "color": "white",
@@ -36,7 +36,7 @@
   {
     "id": "afs_sundew",
     "type": "COMESTIBLE",
-    "name": { "str_sp": "Spite Soda" },
+    "name": "Spite Soda",
     "weight": "10 g",
     "color": "yellow",
     "addiction_type": "alcohol",
@@ -107,7 +107,7 @@
   {
     "id": "afs_loop_fruit",
     "type": "COMESTIBLE",
-    "name": { "str_sp": "loop 'fruit'" },
+    "name": { "str": "loop 'fruit'", "str_pl": "loop 'fruits'" },
     "container": "bag_plastic",
     "copy-from": "protein_bar_evac",
     "color": "white",
@@ -137,7 +137,7 @@
   {
     "id": "afs_beefsim",
     "type": "COMESTIBLE",
-    "name": { "str_sp": "beefsim" },
+    "name": "beefsim",
     "container": "can_food",
     "copy-from": "protein_bar_evac",
     "color": "red",

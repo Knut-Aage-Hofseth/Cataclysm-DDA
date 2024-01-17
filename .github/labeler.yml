@@ -62,8 +62,8 @@
 "EOC: Effects On Condition":
   - "**/**effect_on_condition**"
   - "**/effect_on_condition**"
-  - "**/**eoc**"
-  - "**/eoc**"
+  - "**/**eocs**"
+  - "**/eocs**"
   - "**/condition**"
 
 "Fields / Furniture / Terrain / Traps":
@@ -135,13 +135,13 @@
   - "**/appliance**"
 
 "Monsters":
-  - "**/**monster**"
-  - "**/monster**"
+  - "**/**monsters**"
+  - "**/monsters**"
 
 "Mutations / Traits / Professions/ Hobbies":
   - "**/**profession**"
   - "**/profession**"
-  - "**/**mutation**"
+  - "**/**mutations**"
   - "**/mutation**"
   - "**/hobbies**"
 

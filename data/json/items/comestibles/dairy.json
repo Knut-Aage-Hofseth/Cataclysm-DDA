@@ -70,7 +70,6 @@
     "weight": "312 g",
     "container": "can_medium",
     "calories": 207,
-    "quench": 10,
     "description": "Milk that's had about 60% of its water removed prior to canning.",
     "price": 38,
     "price_postapoc": 200,
@@ -95,7 +94,7 @@
   {
     "type": "COMESTIBLE",
     "id": "yoghurt",
-    "name": { "str_sp": "yogurt" },
+    "name": { "str": "yogurt" },
     "weight": "257 g",
     "color": "magenta",
     "spoils_in": "20 hours",
@@ -192,7 +191,7 @@
   {
     "type": "COMESTIBLE",
     "id": "milk_curdled",
-    "name": { "str_sp": "curdled milk" },
+    "name": { "str": "curdled milk" },
     "weight": "236 g",
     "color": "white",
     "spoils_in": "28 days",

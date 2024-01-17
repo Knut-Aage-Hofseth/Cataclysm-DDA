@@ -691,7 +691,7 @@
     "price": 200000,
     "price_postapoc": 1000,
     "material": [ "stone" ],
-    "weight": "700 g",
+    "weight": "907 g",
     "volume": "250 ml",
     "to_hit": -1,
     "qualities": [ [ "HAMMER", 1 ] ],
@@ -846,12 +846,11 @@
         "holster": true,
         "//1": "It's specifically not rigid because volume of candlestick and candle should be additive.",
         "max_contains_weight": "500 g",
-        "max_contains_volume": "550 ml",
-        "item_restriction": [ "candle", "candle_lit" ],
-        "transparent": true
+        "max_contains_volume": "500 ml",
+        "item_restriction": [ "candle", "candle_lit" ]
       }
     ],
-    "//2": "Based on the medium variation from https://www.amazon.com/dp/B09TNCS7HL"
+    "//2": "Based on the medium variation from https://www.amazon.com/Holders-Candlestick-Decorative-Centerpieces-Fitting/dp/B09TNCS7HL/ref=sr_1_27?crid=2NAMJT9OZJDQT&keywords=gold%2Bcandlesticks&qid=1683196194&sprefix=gold%2Bcandlest%2Caps%2C619&sr=8-27&th=1"
   },
   {
     "type": "GENERIC",
@@ -1139,9 +1138,8 @@
     "description": "A torch that has consumed all its fuel; it can be recrafted into another torch.",
     "category": "other",
     "material": [ "wood" ],
-    "weight": "510 g",
-    "volume": "1042 ml",
-    "longest_side": "122 cm",
+    "weight": "751 g",
+    "volume": "750 ml",
     "flags": [ "TRADER_AVOID" ],
     "melee_damage": { "bash": 8 }
   },
@@ -1391,7 +1389,7 @@
     "price_postapoc": 100,
     "material": [ "steel", "plastic" ],
     "weight": "5 g",
-    "volume": "5 ml"
+    "volume": "1 ml"
   },
   {
     "type": "GENERIC",
@@ -1647,7 +1645,7 @@
   {
     "type": "AMMO",
     "id": "paper",
-    "name": { "str_sp": "paper" },
+    "name": { "str": "paper" },
     "category": "spare_parts",
     "weight": "3 g",
     "color": "white",
@@ -1709,7 +1707,7 @@
     "price": 1000,
     "price_postapoc": 10,
     "material": [ "aluminum", "plastic" ],
-    "weight": "1500 g",
+    "weight": "5400 g",
     "volume": "750 ml",
     "to_hit": -3,
     "flags": [ "TRADER_AVOID", "NO_REPAIR" ],
@@ -1726,8 +1724,25 @@
     "price": 9000,
     "price_postapoc": 10,
     "material": [ "aluminum", "plastic" ],
-    "weight": "2000 g",
+    "weight": "4480 g",
     "volume": "750 ml",
+    "to_hit": -3,
+    "flags": [ "TRADER_AVOID", "NO_REPAIR" ],
+    "melee_damage": { "bash": 6, "cut": 6 }
+  },
+  {
+    "type": "GENERIC",
+    "id": "broken_mininuke_hack",
+    "symbol": ",",
+    "color": "magenta",
+    "name": { "str": "broken mininuke hack" },
+    "category": "other",
+    "description": "A broken mininuke hack.  Just looking at the wreck makes you shiver.  Could be gutted for parts.",
+    "price": 18000,
+    "price_postapoc": 10,
+    "material": [ "aluminum", "plastic" ],
+    "weight": "25000 g",
+    "volume": "18750 ml",
     "to_hit": -3,
     "flags": [ "TRADER_AVOID", "NO_REPAIR" ],
     "melee_damage": { "bash": 6, "cut": 6 }
@@ -1743,7 +1758,7 @@
     "price": 9000,
     "price_postapoc": 10,
     "material": [ "aluminum", "plastic" ],
-    "weight": "2600 g",
+    "weight": "5360 g",
     "volume": "750 ml",
     "to_hit": -3,
     "flags": [ "TRADER_AVOID", "NO_REPAIR" ],
@@ -1760,7 +1775,7 @@
     "price": 9000,
     "price_postapoc": 10,
     "material": [ "aluminum", "plastic" ],
-    "weight": "2000 g",
+    "weight": "4700 g",
     "volume": "750 ml",
     "to_hit": -3,
     "flags": [ "TRADER_AVOID", "NO_REPAIR" ],
@@ -1777,7 +1792,7 @@
     "price": 9000,
     "price_postapoc": 10,
     "material": [ "aluminum", "plastic" ],
-    "weight": "1750 g",
+    "weight": "4536 g",
     "volume": "750 ml",
     "to_hit": -3,
     "flags": [ "TRADER_AVOID", "NO_REPAIR" ],
@@ -1794,7 +1809,7 @@
     "price": 9000,
     "price_postapoc": 10,
     "material": [ "aluminum", "plastic" ],
-    "weight": "3100 g",
+    "weight": "5870 g",
     "volume": "750 ml",
     "to_hit": -3,
     "flags": [ "TRADER_AVOID", "NO_REPAIR" ],
@@ -1842,9 +1857,9 @@
     "price": 9000,
     "price_postapoc": 10,
     "material": [ "plastic" ],
-    "weight": "18 g",
+    "weight": "30 g",
     "//": "A stick of DDR4 SRAM is 133.35 x 31.25 x 4.2mm, or 17.5ml. We round up a touch.",
-    "volume": "18 ml",
+    "volume": "20 ml",
     "to_hit": -1
   },
   {
@@ -1966,7 +1981,7 @@
     "price": 6000,
     "price_postapoc": 50,
     "material": [ "glass" ],
-    "weight": "1 g",
+    "weight": "15 g",
     "volume": "1 ml"
   },
   {
@@ -2120,7 +2135,7 @@
     "price": 25000,
     "price_postapoc": 50,
     "material": [ "aluminum", "plastic" ],
-    "weight": "2100 g",
+    "weight": "21000 g",
     "volume": "2 L",
     "to_hit": 1,
     "melee_damage": { "bash": 4 }
@@ -2138,8 +2153,15 @@
     "flags": [ "WATER_BREAK" ],
     "ammo": [ "battery" ],
     "charges_per_use": 4,
-    "use_action": [ { "type": "link_up", "cable_length": 3, "charge_rate": "35 W" } ],
-    "charged_qualities": [ [ "WINNOW", 1 ] ],
+    "pocket_data": [
+      {
+        "pocket_type": "MAGAZINE_WELL",
+        "rigid": true,
+        "flag_restriction": [ "BATTERY_MEDIUM" ],
+        "default_magazine": "medium_battery_cell"
+      }
+    ],
+    "charged_qualities": [ [ "BLOW_AIR", 1 ] ],
     "weight": "2857 g",
     "volume": "1 L"
   },
@@ -2523,6 +2545,20 @@
   },
   {
     "type": "GENERIC",
+    "id": "dog_tag",
+    "name": { "str_sp": "dog tag" },
+    "description": "An oval disk attached to a chain, worn by military personnel for identification.",
+    "weight": "5 g",
+    "color": "light_gray",
+    "symbol": "[",
+    "material": [ "steel" ],
+    "//": "dog tags are roughly 50mm x 28mm x 0.4mm, or 0.56 ml, but that's so small I needed to round up to 1 ml",
+    "volume": "1 ml",
+    "price": 0,
+    "price_postapoc": 0
+  },
+  {
+    "type": "GENERIC",
     "id": "dog_tag_dog",
     "name": { "str_sp": "dog tag" },
     "description": "An identification tag for a pet, engraved with their name and their owner's address and phone number.  It says \"<dog_name>\".",
@@ -2637,7 +2673,7 @@
     "material": [ "soil" ],
     "flags": [ "NONCONDUCTIVE" ],
     "weight": "1500 g",
-    "volume": "2250 ml",
+    "volume": "750 ml",
     "to_hit": -2,
     "price": 2000,
     "price_postapoc": 10,
@@ -3835,6 +3871,7 @@
     "material": [ "leather" ],
     "volume": "285 ml",
     "weight": "80 g",
+    "extend": { "flags": [ "FANCY" ] },
     "pocket_data": [
       {
         "//": "Folded Sleeve",
@@ -3872,7 +3909,8 @@
     "copy-from": "wallet",
     "name": { "str": "stylish wallet" },
     "description": "A stylish flat case used to carry items such as currency, identification documents, laminated cards, and other small items.",
-    "material": [ "leather" ]
+    "material": [ "leather" ],
+    "extend": { "flags": [ "FANCY" ] }
   },
   {
     "id": "wallet_travel",
@@ -3945,7 +3983,7 @@
     "price": 1000,
     "price_postapoc": 10,
     "material": [ "aluminum", "plastic" ],
-    "weight": "1600 g",
+    "weight": "4 kg",
     "volume": "600 ml",
     "to_hit": -3,
     "flags": [ "TRADER_AVOID", "NO_REPAIR" ],

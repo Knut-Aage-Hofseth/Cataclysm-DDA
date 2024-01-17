@@ -284,7 +284,9 @@
     "color": "green",
     "symbol": "Y",
     "ammo": "battery",
-    "use_action": [ { "type": "link_up", "cable_length": 3, "charge_rate": "5500 W" } ],
+    "pocket_data": [
+      { "pocket_type": "MAGAZINE_WELL", "flag_restriction": [ "BATTERY_HEAVY" ], "default_magazine": "heavy_battery_cell" }
+    ],
     "price": 100000,
     "price_postapoc": 1000
   }

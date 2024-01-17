@@ -4,6 +4,7 @@
     "om_terrain": "safe_house",
     "//": "used by safe_house_basement",
     "type": "mapgen",
+    "weight": 10,
     "object": {
       "fill_ter": "t_floor",
       "rows": [

@@ -129,8 +129,7 @@
     "coverage": 40,
     "required_str": 5,
     "flags": [ "PLACE_ITEM", "TRANSPARENT", "FLAMMABLE", "EASY_DECONSTRUCT" ],
-    "deployed_item": "mannequin",
-    "examine_action": "deployed_furniture",
+    "deconstruct": { "items": [ { "item": "mannequin", "count": 1 } ] },
     "bash": {
       "str_min": 6,
       "str_max": 40,
@@ -297,7 +296,7 @@
   {
     "type": "furniture",
     "id": "f_styling_station",
-    "name": "styling station",
+    "name": "Styling station",
     "symbol": "}",
     "description": "A styling station, is a countertop with a mirror mounted above it and just enough room and cubbies to store a stylist's equipment on it.",
     "color": "white",

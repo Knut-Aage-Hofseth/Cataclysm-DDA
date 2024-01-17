@@ -5,7 +5,6 @@
 #include <array>
 #include <iosfwd>
 #include <map>
-#include <unordered_map>
 #include <set>
 #include <vector>
 
@@ -201,9 +200,9 @@ struct dealt_damage_instance {
 };
 
 struct resistances {
-    std::unordered_map<damage_type_id, float> resist_vals;
+    std::map<damage_type_id, float> resist_vals;
 
-    resistances() = default;
+    resistances();
 
     // If to_self is true, we want armor's own resistance, not one it provides to wearer
     explicit resistances( const item &armor, bool to_self = false, int roll = 0,
@@ -215,13 +214,7 @@ struct resistances {
 
     float get_effective_resist( const damage_unit &du ) const;
 
-    resistances &operator+=( const resistances &other ) {
-        for( const auto &dam : other.resist_vals ) {
-            resist_vals[dam.first] += dam.second;
-        }
-
-        return *this;
-    }
+    resistances &operator+=( const resistances &other );
     bool operator==( const resistances &other );
     resistances operator*( float mod ) const;
     resistances operator/( float mod ) const;
@@ -239,10 +232,9 @@ resistances load_resistances_instance( const JsonObject &jo,
 
 // Returns damage or resistance data
 // Handles some shorthands
-std::unordered_map<damage_type_id, float> load_damage_map( const JsonObject &jo,
+std::map<damage_type_id, float> load_damage_map( const JsonObject &jo,
         const std::set<std::string> &ignored_keys = {} );
-void finalize_damage_map( std::unordered_map<damage_type_id, float> &damage_map,
-                          bool force_derive = false,
+void finalize_damage_map( std::map<damage_type_id, float> &damage_map, bool force_derive = false,
                           float default_value = 0.0f );
 
 #endif // CATA_SRC_DAMAGE_H

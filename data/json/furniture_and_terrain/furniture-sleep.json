@@ -22,8 +22,7 @@
         { "item": "2x4", "count": [ 5, 8 ] },
         { "item": "nail", "charges": [ 6, 8 ] },
         { "item": "splinter", "count": [ 3, 6 ] },
-        { "item": "sheet_cotton", "count": [ 5, 6 ] },
-        { "item": "cotton_patchwork", "count": [ 8, 15 ] },
+        { "item": "cotton_patchwork", "count": [ 40, 55 ] },
         { "item": "scrap", "count": [ 10, 20 ] }
       ]
     }
@@ -55,8 +54,7 @@
         { "item": "2x4", "count": [ 8, 15 ] },
         { "item": "nail", "charges": [ 15, 20 ] },
         { "item": "splinter", "count": [ 8, 15 ] },
-        { "item": "sheet_cotton", "count": [ 10, 13 ] },
-        { "item": "cotton_patchwork", "count": [ 8, 14 ] },
+        { "item": "cotton_patchwork", "count": [ 80, 110 ] },
         { "item": "scrap", "count": [ 20, 40 ] }
       ]
     }
@@ -84,7 +82,6 @@
         { "item": "2x4", "count": [ 5, 8 ] },
         { "item": "nail", "charges": [ 6, 8 ] },
         { "item": "splinter", "count": [ 3, 6 ] },
-        { "item": "sheet_cotton", "count": [ 1, 2 ] },
         { "item": "cotton_patchwork", "count": [ 10, 15 ] },
         { "item": "down_feather", "count": [ 45, 55 ] },
         { "item": "scrap", "count": [ 10, 20 ] }
@@ -118,8 +115,7 @@
         { "item": "2x4", "count": [ 8, 15 ] },
         { "item": "nail", "charges": [ 15, 20 ] },
         { "item": "splinter", "count": [ 8, 15 ] },
-        { "item": "sheet_cotton", "count": [ 2, 3 ] },
-        { "item": "cotton_patchwork", "count": [ 12, 14 ] },
+        { "item": "cotton_patchwork", "count": [ 20, 30 ] },
         { "item": "down_feather", "count": [ 90, 110 ] },
         { "item": "scrap", "count": [ 20, 40 ] }
       ]
@@ -155,8 +151,7 @@
       "items": [
         { "item": "pipe", "count": [ 8, 15 ] },
         { "item": "sheet_metal_small", "count": [ 0, 2 ] },
-        { "item": "sheet_cotton", "count": [ 15, 20 ] },
-        { "item": "cotton_patchwork", "count": [ 8, 15 ] },
+        { "item": "cotton_patchwork", "count": [ 120, 160 ] },
         { "item": "scrap", "count": [ 60, 100 ] }
       ]
     }
@@ -206,7 +201,7 @@
       "str_max": 30,
       "sound": "rrrrip!",
       "sound_fail": "whump.",
-      "items": [ { "item": "sheet_cotton", "count": [ 5, 6 ] }, { "item": "cotton_patchwork", "count": [ 8, 15 ] } ]
+      "items": [ { "item": "cotton_patchwork", "count": [ 40, 55 ] } ]
     }
   },
   {
@@ -230,11 +225,7 @@
       "str_max": 30,
       "sound": "rrrrip!",
       "sound_fail": "whump.",
-      "items": [
-        { "item": "sheet_cotton", "count": 1 },
-        { "item": "cotton_patchwork", "count": [ 10, 15 ] },
-        { "item": "down_feather", "count": [ 45, 55 ] }
-      ]
+      "items": [ { "item": "cotton_patchwork", "count": [ 10, 15 ] }, { "item": "down_feather", "count": [ 45, 55 ] } ]
     }
   },
   {
@@ -258,11 +249,7 @@
       "sound_fail": "slap!",
       "sound_vol": 6,
       "sound_fail_vol": 3,
-      "items": [
-        { "item": "sheet_cotton", "count": [ 2, 3 ] },
-        { "item": "cotton_patchwork", "count": [ 12, 14 ] },
-        { "item": "rope_makeshift_6", "count": [ 2, 3 ] }
-      ]
+      "items": [ { "item": "cotton_patchwork", "count": [ 20, 30 ] }, { "item": "rope_makeshift_6", "count": [ 2, 3 ] } ]
     }
   },
   {
@@ -304,8 +291,7 @@
     "deconstruct": {
       "items": [
         { "item": "2x4", "count": 4 },
-        { "item": "sheet_cotton", "count": [ 3, 4 ] },
-        { "item": "cotton_patchwork", "count": [ 5, 14 ] },
+        { "item": "cotton_patchwork", "count": [ 30, 35 ] },
         { "item": "nail", "charges": [ 4, 6 ] }
       ]
     },
@@ -319,8 +305,7 @@
         { "item": "2x4", "count": [ 1, 3 ] },
         { "item": "nail", "charges": [ 2, 6 ] },
         { "item": "splinter", "count": [ 1, 4 ] },
-        { "item": "sheet_cotton", "count": [ 2, 3 ] },
-        { "item": "cotton_patchwork", "count": [ 6, 14 ] }
+        { "item": "cotton_patchwork", "count": [ 20, 30 ] }
       ]
     }
   },

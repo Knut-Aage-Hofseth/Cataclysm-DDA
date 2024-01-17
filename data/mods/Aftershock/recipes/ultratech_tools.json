@@ -23,7 +23,6 @@
         [ "welder_crude", 600 ],
         [ "integrated_welder", 600 ],
         [ "soldering_iron", 600 ],
-        [ "soldering_iron_portable", 600 ],
         [ "oxy_torch", 80 ]
       ]
     ],
@@ -69,7 +68,6 @@
         [ "welder_crude", 450 ],
         [ "integrated_welder", 450 ],
         [ "soldering_iron", 450 ],
-        [ "soldering_iron_portable", 450 ],
         [ "oxy_torch", 60 ]
       ]
     ],

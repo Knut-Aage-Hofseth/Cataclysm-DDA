@@ -22,8 +22,6 @@ class Character;
 class recipe;
 struct tripoint;
 class vehicle;
-struct mutation_variant;
-enum class get_body_part_flags;
 
 using bodytype_id = std::string;
 
@@ -226,8 +224,7 @@ class talker
         virtual void forget_recipe( const recipe_id & ) {}
         virtual void mutate( const int &, const bool & ) {}
         virtual void mutate_category( const mutation_category_id &, const bool & ) {}
-        virtual void mutate_towards( const trait_id &, const mutation_category_id &, const bool & ) {};
-        virtual void set_mutation( const trait_id &, const mutation_variant * = nullptr ) {}
+        virtual void set_mutation( const trait_id & ) {}
         virtual void unset_mutation( const trait_id & ) {}
         virtual void activate_mutation( const trait_id & ) {}
         virtual void deactivate_mutation( const trait_id & ) {}
@@ -331,15 +328,12 @@ class talker
         virtual bool can_see() const {
             return false;
         }
-        virtual bool can_see_location( const tripoint & ) const {
-            return false;
-        }
         virtual bool is_mute() const {
             return false;
         }
         virtual void add_effect( const efftype_id &, const time_duration &, const std::string &, bool, bool,
                                  int ) {}
-        virtual void remove_effect( const efftype_id &, const std::string & ) {}
+        virtual void remove_effect( const efftype_id & ) {}
         virtual void add_bionic( const bionic_id & ) {}
         virtual void remove_bionic( const bionic_id & ) {}
         virtual std::string get_value( const std::string & ) const {
@@ -476,9 +470,6 @@ class talker
             return "";
         }
         virtual std::string evaluation_by( const talker & ) const {
-            return "";
-        }
-        virtual std::string view_personality_traits() const {
             return "";
         }
         virtual std::string short_description() const {
@@ -687,7 +678,7 @@ class talker
         virtual units::temperature_delta get_body_temp_delta() const {
             return 0_C_delta;
         }
-        virtual std::vector<bodypart_id> get_all_body_parts( get_body_part_flags /* flags */ ) const {
+        virtual std::vector<bodypart_id> get_all_body_parts( bool, bool ) const {
             return std::vector<bodypart_id>();
         }
         virtual int get_part_hp_cur( const bodypart_id & ) const {

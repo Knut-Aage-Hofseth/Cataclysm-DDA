@@ -176,8 +176,7 @@ class hacksaw_activity_actor : public activity_actor
     public:
         explicit hacksaw_activity_actor( const tripoint &target,
                                          const item_location &tool ) : target( target ), tool( tool ) {};
-        explicit hacksaw_activity_actor( const tripoint &target, const itype_id &type,
-                                         const tripoint &veh_pos ) : target( target ), type( type ), veh_pos( veh_pos ) {};
+
         activity_id get_type() const override {
             return activity_id( "ACT_HACKSAW" );
         }
@@ -198,8 +197,7 @@ class hacksaw_activity_actor : public activity_actor
     private:
         tripoint target;
         item_location tool;
-        std::optional<itype_id> type;
-        std::optional<tripoint> veh_pos;
+
         bool can_resume_with_internal( const activity_actor &other,
                                        const Character &/*who*/ ) const override;
 };
@@ -344,34 +342,6 @@ class hotwire_car_activity_actor : public activity_actor
         static std::unique_ptr<activity_actor> deserialize( JsonValue &jsin );
 };
 
-class glide_activity_actor : public activity_actor
-{
-    private:
-        int jump_direction;
-        int glide_distance;
-        int moved_tiles = 0;
-        int moves_total = to_moves<int>( 1_seconds );
-        explicit glide_activity_actor() = default;
-
-    public:
-        explicit glide_activity_actor( Character *you, int jump_direction, int glide_distance );
-
-        activity_id get_type() const override {
-            return activity_id( "ACT_GLIDE" );
-        }
-
-        void start( player_activity &act, Character & ) override;
-        void do_turn( player_activity &act, Character &you ) override;
-        void finish( player_activity &act, Character &you ) override;
-
-        std::unique_ptr<activity_actor> clone() const override {
-            return std::make_unique<glide_activity_actor>( *this );
-        }
-
-        void serialize( JsonOut &jsout ) const override;
-        static std::unique_ptr<activity_actor> deserialize( JsonValue &jsin );
-};
-
 class bikerack_racking_activity_actor : public activity_actor
 {
     private:
@@ -492,15 +462,13 @@ class move_items_activity_actor : public activity_actor
         std::vector<int> quantities;
         bool to_vehicle;
         tripoint relative_destination;
-        bool hauling_mode;
 
     public:
         move_items_activity_actor( std::vector<item_location> target_items, std::vector<int> quantities,
-                                   bool to_vehicle, tripoint relative_destination, bool hauling_mode = false ) :
+                                   bool to_vehicle, tripoint relative_destination ) :
             target_items( std::move( target_items ) ), quantities( std::move( quantities ) ),
             to_vehicle( to_vehicle ),
-            relative_destination( relative_destination ),
-            hauling_mode( hauling_mode ) {}
+            relative_destination( relative_destination ) {}
 
         activity_id get_type() const override {
             return activity_id( "ACT_MOVE_ITEMS" );
@@ -1192,7 +1160,7 @@ class milk_activity_actor : public activity_actor
         }
 
         void start( player_activity &act, Character &/*who*/ ) override;
-        void do_turn( player_activity &/*act*/, Character &/*who*/ ) override;
+        void do_turn( player_activity &/*act*/, Character &/*who*/ ) override {}
         void finish( player_activity &act, Character &who ) override;
         void canceled( player_activity &/*act*/, Character &/*who*/ ) override {}
 

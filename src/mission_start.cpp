@@ -19,6 +19,7 @@
 #include "map_iterator.h"
 #include "mapdata.h"
 #include "messages.h"
+#include "name.h"
 #include "npc.h"
 #include "npc_class.h"
 #include "omdata.h"

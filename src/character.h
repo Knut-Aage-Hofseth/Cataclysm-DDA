@@ -1654,7 +1654,11 @@ class Character : public Creature, public visitable
         /** Removes the mutation's child flag from the player's list */
         void remove_child_flag( const trait_id &flag );
         /** Try to cross The Threshold */
-        void test_crossing_threshold( const mutation_category_id &mutation_category );
+        void try_crossing_threshold( const mutation_category_id &mutation_category );
+        /** Crosses the mutation threshold of the given category */
+        void cross_threshold( const mutation_category_id &mutation_category );
+        /*** Returns if the character can cross the given threshold. */
+        bool can_cross_threshold( const mutation_category_id &mutation_category );
         /** Returns how many steps are required to reach a mutation */
         int mutation_height( const trait_id &mut ) const;
         /** Recalculates mutation_category_level[] values for the player */
@@ -2964,6 +2968,10 @@ class Character : public Creature, public visitable
         // Uses up charges
         bool use_charges_if_avail( const itype_id &it, int quantity );
 
+        std::pair<float, item> get_best_weapon_by_damage_type( damage_type_id dmg_type ) const;
+
+        std::pair<int, const item *> get_best_tool( quality_id quality ) const;
+
         /**
         * Available ups from all sources
         * Sum of mech, bionic UPS and UPS
@@ -3182,7 +3190,7 @@ class Character : public Creature, public visitable
          *  @param gun item to fire (which does not necessary have to be in the players possession)
          *  @return number of shots actually fired
          */
-        int fire_gun( map *here, const tripoint_bub_ms &target, int shots, item &gun,
+        int fire_gun( map &here, const tripoint_bub_ms &target, int shots, item &gun,
                       item_location ammo = item_location() );
         /** Execute a throw */
         dealt_projectile_attack throw_item( const tripoint_bub_ms &target, const item &to_throw,
@@ -3780,9 +3788,10 @@ class Character : public Creature, public visitable
         void add_known_trap( const tripoint_bub_ms &pos, const trap &t );
 
         // see Creature::sees
-        bool sees( const tripoint_bub_ms &t, bool is_avatar = false, int range_mod = 0 ) const override;
+        bool sees( const map &here, const tripoint_bub_ms &t, bool is_avatar = false,
+                   int range_mod = 0 ) const override;
         // see Creature::sees
-        bool sees( const Creature &critter ) const override;
+        bool sees( const map &here, const Creature &critter ) const override;
         Attitude attitude_to( const Creature &other ) const override;
         virtual npc_attitude get_attitude() const;
 

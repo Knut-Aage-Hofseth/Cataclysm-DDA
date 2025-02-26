@@ -10,14 +10,15 @@
 #include <set>
 #include <tuple>
 
-#include "avatar.h"
 #include "bodypart.h"
 #include "cata_assert.h"
 #include "cata_utility.h"
 #include "character.h"
 #include "creature.h"
 #include "creature_tracker.h"
+#include "damage.h"
 #include "debug.h"
+#include "effect_source.h"
 #include "enums.h"
 #include "explosion.h"
 #include "field.h"
@@ -26,6 +27,7 @@
 #include "itype.h"
 #include "map.h"
 #include "map_iterator.h"
+#include "map_scale_constants.h"
 #include "mapdata.h"
 #include "material.h"
 #include "messages.h"
@@ -210,7 +212,7 @@ void vehicle::smart_controller_handle_turn( map &here,
 
     int cur_battery_level;
     int max_battery_level;
-    std::tie( cur_battery_level, max_battery_level ) = battery_power_level();
+    std::tie( cur_battery_level, max_battery_level ) = battery_power_level( );
     int battery_level_percent = max_battery_level == 0 ? 0 : cur_battery_level * 100 /
                                 max_battery_level;
 
@@ -308,7 +310,7 @@ void vehicle::smart_controller_handle_turn( map &here,
     if( !has_electric_engine ) {
         if( !discharge_forbidden_soft && is_stationary && engine_on && !autopilot_on &&
             !player_is_driving_this_veh( &here ) ) {
-            stop_engines();
+            stop_engines( here );
             sfx::do_vehicle_engine_sfx();
             // temporary solution
         } else if( discharge_forbidden_hard && !engine_on && cur_battery_level > 0 ) {
@@ -402,7 +404,7 @@ void vehicle::smart_controller_handle_turn( map &here,
             vehicle_part &vp = parts[engines[c_engines[i]]];
             // ..0.. < ..1..  was off, new state on
             if( ( prev_mask & ( 1 << i ) ) < ( opt_mask & ( 1 << i ) ) ) {
-                if( !start_engine( vp, true ) ) {
+                if( !start_engine( here, vp, true ) ) {
                     failed_to_start = true;
                 }
                 turned_on_gas_engine |= !is_engine_type( vp, fuel_type_battery );
@@ -429,7 +431,7 @@ void vehicle::smart_controller_handle_turn( map &here,
                 vehicle_part &vp = parts[engines[c_engines[i]]];
                 // was on, needs to be off
                 if( ( prev_mask & ( 1 << i ) ) > ( opt_mask & ( 1 << i ) ) ) {
-                    start_engine( vp, false );
+                    start_engine( here, vp, false );
                 }
             }
             if( turned_on_gas_engine ) {
@@ -1182,7 +1184,7 @@ veh_collision vehicle::part_collision( map &here, int part, const tripoint_abs_m
             }
 
             if( vpi.has_flag( "SHARP" ) ) {
-                critter->bleed();
+                critter->bleed( here );
             } else {
                 sounds::sound( pos, 20, sounds::sound_t::combat, snd, false, "smash_success", "hit_vehicle" );
             }
@@ -1249,7 +1251,7 @@ void vehicle::handle_trap( map *here, const tripoint_bub_ms &p, vehicle_part &vp
 
     Character &player_character = get_player_character();
     const Character *driver = get_driver( *here );
-    const bool seen = player_character.sees( p );
+    const bool seen = player_character.sees( *here, p );
     const bool known = tr.can_see( p, player_character );
     const bool damage_done = vp_wheel.info().durability <= veh_data.damage;
     if( seen && damage_done ) {
@@ -2208,10 +2210,11 @@ units::angle map::shake_vehicle( vehicle &veh, const int velocity_before,
             continue;
         }
 
+        const tripoint_bub_ms rider_pos = rider->pos_bub( here );
         const tripoint_bub_ms part_pos = veh.bub_part_pos( here, ps );
         if( rider->pos_bub() != part_pos ) {
             debugmsg( "throw passenger: passenger at %d,%d,%d, part at %d,%d,%d",
-                      rider->posx(), rider->posy(), rider->posz(),
+                      rider_pos.x(), rider_pos.y(), rider_pos.z(),
                       part_pos.x(), part_pos.y(), part_pos.z() );
             veh.part( ps ).remove_flag( vp_flag::passenger_flag );
             continue;

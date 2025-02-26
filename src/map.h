@@ -45,6 +45,7 @@
 #include "type_id.h"
 #include "units.h"
 #include "value_ptr.h"
+#include "vpart_position.h"
 
 #if defined(TILES)
 #include "cata_tiles.h"
@@ -66,7 +67,6 @@ class field_entry;
 class item_location;
 class mapgendata;
 class monster;
-class optional_vpart_position;
 class relic_procgen_data;
 class submap;
 class vehicle;
@@ -591,7 +591,7 @@ class map
 
         bool is_open_air( const tripoint_bub_ms &p ) const;
 
-        bool try_fall( const tripoint_bub_ms &p, Creature *c ) const;
+        bool try_fall( const tripoint_bub_ms &p, Creature *c );
 
         /**
         * Similar behavior to `move_cost()`, but ignores vehicles.
@@ -1147,7 +1147,8 @@ class map
          */
         bash_params bash( const tripoint_bub_ms &p, int str, bool silent = false,
                           bool destroy = false, bool bash_floor = false,
-                          const vehicle *bashing_vehicle = nullptr );
+                          const vehicle *bashing_vehicle = nullptr,
+                          bool repair_missing_ground = true );
 
         // Effects of attacks/items
         bool hit_with_acid( const tripoint_bub_ms &p );
@@ -2044,7 +2045,8 @@ class map
 
         // Internal methods used to bash just the selected features
         // Information on what to bash/what was bashed is read from/written to the bash_params struct
-        void bash_ter_furn( const tripoint_bub_ms &p, bash_params &params );
+        void bash_ter_furn( const tripoint_bub_ms &p, bash_params &params,
+                            bool repair_missing_ground = true );
         void bash_items( const tripoint_bub_ms &p, bash_params &params );
         void bash_vehicle( const tripoint_bub_ms &p, bash_params &params );
         void bash_field( const tripoint_bub_ms &p, bash_params &params );

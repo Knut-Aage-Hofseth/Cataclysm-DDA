@@ -7,6 +7,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <list>
+#include <map>
 #include <set>
 #include <string>
 #include <string_view>
@@ -570,9 +571,11 @@ inline void mandatory( const JsonObject &jo, const bool was_loaded, const std::s
     if( !jo.read( name, member ) ) {
         if( !was_loaded ) {
             if( jo.has_member( name ) ) {
-                jo.throw_error( str_cat( "failed to read mandatory member \"", name, "\"" ) );
+                jo.throw_error( str_cat( "object beginning at next line failed to read mandatory member \"", name,
+                                         "\"" ) );
             } else {
-                jo.throw_error( str_cat( "missing mandatory member \"", name, "\"" ) );
+                jo.throw_error( str_cat( "object beginning at next line missing mandatory member \"", name,
+                                         "\"" ) );
             }
         }
     }
@@ -584,9 +587,11 @@ inline void mandatory( const JsonObject &jo, const bool was_loaded, const std::s
     if( !reader( jo, name, member, was_loaded ) ) {
         if( !was_loaded ) {
             if( jo.has_member( name ) ) {
-                jo.throw_error( str_cat( "failed to read mandatory member \"", name, "\"" ) );
+                jo.throw_error( str_cat( "object beginning at next line failed to read mandatory member \"", name,
+                                         "\"" ) );
             } else {
-                jo.throw_error( str_cat( "missing mandatory member \"", name, "\"" ) );
+                jo.throw_error( str_cat( "object beginning at next line missing mandatory member \"", name,
+                                         "\"" ) );
             }
         }
     }
@@ -597,7 +602,8 @@ inline void mandatory( const JsonObject &jo, const bool was_loaded, const std::s
  * The compiler will construct the appropriate one of these based on if the
  * type can support the operations being done.
  * So, it defaults to the false_type, but if it can use the *= operator
- * against a float, it then supports proportional, and the handle_proportional
+ * against a float OR defines member function handle_proportional (not both!),
+ * it then supports proportional, and the handle_proportional
  * template that isn't just a dummy is constructed.
  * Similarly, if it can use a += operator against it's own type, the non-dummy
  * handle_relative template is constructed.
@@ -606,8 +612,15 @@ template<typename T, typename = std::void_t<>>
 struct supports_proportional : std::false_type { };
 
 template<typename T>
-struct supports_proportional<T, std::void_t<decltype( std::declval<T &>() *= std::declval<float>() )>> :
-std::true_type {};
+struct supports_proportional<T, std::void_t<decltype( std::declval<T &>() *= std::declval<float>() )
+>> : std::true_type {};
+
+template<typename T, typename = std::void_t<>>
+struct supports_proportional_handler : std::false_type {};
+
+template<typename T>
+struct supports_proportional_handler<T, std::void_t<decltype( &T::handle_proportional )
+>> : std::true_type {};
 
 template<typename T, typename = std::void_t<>>
 struct supports_relative : std::false_type { };
@@ -667,8 +680,8 @@ static_assert( !supports_proportional<DebugLevel>::value, "enums should not supp
 // Dummy template:
 // Warn if it's trying to use proportional where it cannot, but otherwise just
 // return.
-template < typename MemberType, std::enable_if_t < !supports_proportional<MemberType>::value > * =
-           nullptr >
+template < typename MemberType, std::enable_if_t < !supports_proportional<MemberType>::value &&
+           !supports_proportional_handler<MemberType>::value > * = nullptr >
 inline bool handle_proportional( const JsonObject &jo, const std::string_view name, MemberType & )
 {
     if( jo.has_object( "proportional" ) ) {
@@ -709,6 +722,27 @@ inline bool handle_proportional( const JsonObject &jo, const std::string_view na
         } else {
             jo.throw_error_at( name, str_cat( "Invalid scalar for ", name ) );
         }
+    }
+    return false;
+}
+
+//handles proportional for a class/struct with member function handle_proportional
+template<typename MemberType, std::enable_if_t<supports_proportional_handler<MemberType>::value>* = nullptr>
+inline bool handle_proportional( const JsonObject &jo, const std::string_view name,
+                                 MemberType &member )
+{
+    if( jo.has_object( "proportional" ) ) {
+        JsonObject proportional = jo.get_object( "proportional" );
+        proportional.allow_omitted_members();
+        // We need to check this here, otherwise we get problems with unvisited members
+        if( !proportional.has_member( name ) ) {
+            return false;
+        }
+        bool handled = member.handle_proportional( proportional.get_member( name ) );
+        if( !handled ) {
+            jo.throw_error_at( name, str_cat( "Invalid scalar for ", name ) );
+        }
+        return handled;
     }
     return false;
 }
@@ -900,6 +934,23 @@ struct handler<std::vector<T>> {
     template<typename P>
     void erase_if( std::vector<T> &container, const P &predicate ) const {
         const auto iter = std::find_if( container.begin(), container.end(), predicate );
+        if( iter != container.end() ) {
+            container.erase( iter );
+        }
+    }
+    static constexpr bool is_container = true;
+};
+
+template<typename Key, typename Val>
+struct handler<std::map<Key, Val>> {
+    void clear( std::map<Key, Val> &container ) const {
+        container.clear();
+    }
+    void insert( std::map<Key, Val> &container, const std::pair<Key, Val> &data ) const {
+        container.emplace( data );
+    }
+    void erase( std::map<Key, Val> &container, const std::pair<Key, Val> &data ) const {
+        const auto iter = container.find( data.first );
         if( iter != container.end() ) {
             container.erase( iter );
         }
@@ -1253,6 +1304,58 @@ class string_id_reader : public generic_typed_reader<string_id_reader<T>>
 public:
     string_id<T> get_next( std::string &&str ) const {
         return string_id<T>( std::move( str ) );
+    }
+};
+
+/**
+ * Loads std::pair of [K = string_id, V = int/float] values from JSON -- usually into an std::map
+ * Accepted formats for elements in an array:
+ * 1. A named key/value pair object: "addiction_type": [ { "addiction": "caffeine", "potential": 3 } ]
+ * 2. A key/value pair array: "addiction_type": [ [ "caffeine", 3 ] ]
+ * 3. A single value: "addiction_type": [ "caffeine" ]
+ * A single value can also be provided outside of an array, e.g. "addiction_type": "caffeine"
+ * For single values, weights are assigned default_weight
+ */
+template<typename K, typename V>
+class weighted_string_id_reader : public generic_typed_reader<weighted_string_id_reader<K, V>>
+{
+public:
+    V default_weight;
+    explicit weighted_string_id_reader( V default_weight ) : default_weight( default_weight ) {};
+
+    std::pair<K, V> get_next( const JsonValue &val ) const {
+        if( val.test_object() ) {
+            JsonObject inline_pair = val.get_object();
+            if( !( inline_pair.size() == 1 || inline_pair.size() == 2 ) ) {
+                inline_pair.throw_error( "weighted_string_id_reader failed to read object" );
+            }
+            K pair_key;
+            V pair_val = default_weight;
+            for( JsonMember mem : inline_pair ) {
+                if( mem.test_string() ) {
+                    pair_key = K( std::move( mem.get_string() ) );
+                } else if( mem.test_float() ) {
+                    pair_val = static_cast<V>( mem.get_float() );
+                } else {
+                    inline_pair.throw_error( "weighted_string_id_reader found unexpected value in object" );
+                }
+            }
+            return std::pair<K, V>( pair_key, pair_val );
+        } else if( val.test_array() ) {
+            JsonArray arr = val.get_array();
+            if( arr.size() != 2 ) {
+                arr.throw_error( "weighted_string_id_reader read array without exactly two entries" );
+            }
+            return std::pair<K, V>(
+                       K( std::move( arr[0].get_string() ) ),
+                       static_cast<V>( arr[1].get_float() ) );
+        } else {
+            if( val.test_string() ) {
+                return std::pair<K, V>(
+                           K( std::move( val.get_string() ) ), default_weight );
+            }
+            val.throw_error( "weighted_string_id_reader provided with invalid string_id" );
+        }
     }
 };
 

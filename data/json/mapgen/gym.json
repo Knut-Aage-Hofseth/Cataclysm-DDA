@@ -103,7 +103,7 @@
         "                        "
       ],
       "palettes": [ "roof_palette" ],
-      "place_items": [ { "item": "roof_trash", "x": [ 4, 19 ], "y": [ 10, 19 ], "chance": 50, "repeat": [ 1, 3 ] } ],
+      "place_items": [ { "item": "SUS_trash_roof", "x": [ 4, 19 ], "y": [ 10, 19 ], "chance": 50, "repeat": [ 1, 3 ] } ],
       "place_nested": [
         {
           "chunks": [
@@ -133,8 +133,8 @@
       "rows": [
         "..............#55===55#.",
         "..............#c     c#.",
-        "..#555555555###c ### c#.",
-        "..5           |c   # c#.",
+        "..#555555555###c &&& c#.",
+        "..5           |c   & c#.",
         "..5 @ @ @ c   ||+|||+|#.",
         "..5       c   5   |:::#.",
         "..5 @ @ @ c   =  <|<::#.",
@@ -177,7 +177,6 @@
       "furniture": {
         "!": [ "f_ergometer", "f_ergometer_mechanical" ],
         "{": "f_bigmirror",
-        "#": "f_counter",
         "&": "f_counter",
         "*": "f_shower",
         "@": [ "f_treadmill", "f_treadmill_mechanical" ],

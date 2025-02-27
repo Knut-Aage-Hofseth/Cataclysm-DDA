@@ -2201,6 +2201,7 @@ void basecamp::abandon_camp()
 
 void basecamp::scan_pseudo_items()
 {
+    map &here = get_map();
     for( auto &expansion : expansions ) {
         expansion.second.available_pseudo_items.clear();
         tripoint_abs_omt tile = omt_pos + expansion.first;
@@ -2230,7 +2231,7 @@ void basecamp::scan_pseudo_items()
             const optional_vpart_position &vp = expansion_map.veh_at( pos );
             if( vp.has_value() &&
                 vp->vehicle().is_appliance() ) {
-                for( const auto &[tool, discard_] : vp->get_tools() ) {
+                for( const auto &[tool, discard_] : vp->get_tools( here ) ) {
                     if( tool.has_flag( flag_PSEUDO ) &&
                         tool.has_flag( flag_ALLOWS_REMOTE_USE ) ) {
                         bool found = false;
@@ -3777,6 +3778,8 @@ std::pair<size_t, std::string> basecamp::farm_action( const point_rel_omt &dir, 
 void basecamp::start_farm_op( const point_rel_omt &dir, const mission_id &miss_id,
                               float exertion_level )
 {
+    map &here = get_map();
+
     farm_ops op = farm_ops::plow;
     if( miss_id.id == Camp_Plow ) {
         op = farm_ops::plow;
@@ -3817,7 +3820,7 @@ void basecamp::start_farm_op( const point_rel_omt &dir, const mission_id &miss_i
             for( std::pair<item_location, int> &seeds : seed_selection ) {
                 size_t num_seeds = seeds.second;
                 item_location seed = seeds.first;
-                seed.overflow();
+                seed.overflow( here );
                 if( seed->count_by_charges() ) {
                     seed->charges = num_seeds;
                 }

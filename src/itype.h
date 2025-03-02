@@ -23,6 +23,7 @@
 #include "damage.h"
 #include "enums.h" // point
 #include "explosion.h"
+#include "flexbuffer_json.h"
 #include "game_constants.h"
 #include "item.h"
 #include "item_pocket.h"
@@ -39,7 +40,6 @@
 // IWYU pragma: no_forward_declare std::hash
 class Character;
 class Item_factory;
-class JsonObject;
 class Trait_group;
 class map;
 template <typename E> struct enum_traits;
@@ -52,6 +52,7 @@ class gun_modifier_data
         std::set<std::string> flags_;
 
     public:
+        gun_modifier_data() = default;
         gun_modifier_data( const translation &n, const int q, const std::set<std::string> &f ) : name_( n ),
             qty_( q ), flags_( f ) { }
         const translation &name() const {
@@ -67,6 +68,7 @@ class gun_modifier_data
         const std::set<std::string> &flags() const {
             return flags_;
         }
+        void deserialize( const JsonObject &jo );
 };
 
 class gunmod_location
@@ -92,8 +94,8 @@ class gunmod_location
             return _id < rhs._id;
         }
 
-        void deserialize( std::string &&id ) {
-            _id = std::move( id );
+        void deserialize( const JsonValue &jo ) {
+            _id = jo.get_string();
         }
 };
 
@@ -126,10 +128,28 @@ struct islot_tool {
 constexpr float base_metabolic_rate =
     2500.0f;  // kcal / day, standard average for human male, but game does not differentiate genders here.
 
+struct rot_spawn_data {
+    /** The monster (or monster group, mutually exclusive) that is drawn from when the item rots away */
+    mtype_id rot_spawn_monster = mtype_id::NULL_ID();
+    mongroup_id rot_spawn_group = mongroup_id::NULL_ID();
+    /** Chance the above monster spawns*/
+    float rot_spawn_chance;
+    /** Range of monsters spawned */
+    std::pair<int, int> rot_spawn_monster_amount;
+
+    void load( const JsonObject &jo );
+    void deserialize( const JsonObject &jo );
+};
+
 struct islot_comestible {
     public:
         friend Item_factory;
         friend item;
+
+        bool was_loaded = false;
+        void load( const JsonObject &jo );
+        void deserialize( const JsonObject &jo );
+
         /** subtype, e.g. FOOD, DRINK, MED */
         std::string comesttype;
 
@@ -138,6 +158,9 @@ struct islot_comestible {
 
         /** Defaults # of charges (drugs, loaf of bread? etc) */
         int def_charges = 0;
+
+        /** # of uses in the given volume; defaults to charge count if not provided */
+        int stack_size = 0;
 
         /** effect on character thirst (may be negative) */
         int quench = 0;
@@ -192,7 +215,8 @@ struct islot_comestible {
         std::map<diseasetype_id, float> contamination;
 
         // Materials to generate the below
-        std::map<material_id, int> materials;
+        material_id primary_material =
+            material_id::NULL_ID(); //TO-DO: this overrides materials and shouldn't be necessary
         //** specific heats in J/(g K) and latent heat in J/g */
         float specific_heat_liquid = 4.186f;
         float specific_heat_solid = 2.108f;
@@ -213,13 +237,7 @@ struct islot_comestible {
         }
 
         /** The monster that is drawn from when the item rots away */
-        mtype_id rot_spawn_monster = mtype_id::NULL_ID();
-        mongroup_id rot_spawn_group = mongroup_id::NULL_ID();
-
-        /** Chance the above monster spawns*/
-        int rot_spawn_chance = 10;
-
-        std::pair<int, int> rot_spawn_monster_amount = {1, 1};
+        rot_spawn_data rot_spawn;
 
     private:
         /** Nutrition values to use for this type when they aren't calculated from
@@ -720,6 +738,9 @@ struct itype_variant_data {
 
 // TODO: this shares a lot with the ammo item type, merge into a separate slot type?
 struct islot_gun : common_ranged_data {
+    bool was_loaded = false;
+    void load( const JsonObject &jo );
+    void deserialize( const JsonObject &jo );
     /**
      * What skill this gun uses.
      */
